@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
     #debugger #La pagina no carga y es para ver en el servidor de rails los datos
   end
 
@@ -73,13 +74,13 @@ end
 
     # Confirms a logged-in user.
 
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
+    #def logged_in_user #Se elimino porque ahora esta en ApplicationController
+    #  unless logged_in?
+    #    store_location
+    #    flash[:danger] = "Please log in."
+    #    redirect_to login_url
+    #  end
+    #end
 
     # Confirms the correct user.
 
