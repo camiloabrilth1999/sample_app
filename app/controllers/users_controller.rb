@@ -52,16 +52,25 @@ class UsersController < ApplicationController
     end
   end
 
-def destroy
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
+  end
 
-  User.find(params[:id]).destroy
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(page: params[:page])
+    render 'show_follow'
+  end
 
-  flash[:success] = "User deleted"
-
-  redirect_to users_url
-
-end
-
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
+  end
 
   private
 
